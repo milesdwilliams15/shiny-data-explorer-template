@@ -7,13 +7,19 @@
 #    https://shiny.posit.co/
 #
 
-library(shiny)
 
-# Define UI for application that draws a histogram
+# Open the packages you need ----------------------------------------------
+
+library(shiny)
+library(tidyverse)
+
+
+# Define user interface ---------------------------------------------------
+
 ui <- fluidPage(
 
-    # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    ## Application title ----
+    titlePanel("Correlates of War Size Data Explorer"),
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
@@ -32,20 +38,28 @@ ui <- fluidPage(
     )
 )
 
-# Define server logic required to draw a histogram
+# Define server logic -----------------------------------------------------
+
 server <- function(input, output) {
 
     output$distPlot <- renderPlot({
+        # read in the data
+        dt <- read_csv(here::here("_data", "dashboard_data.csv"))
+        
         # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
+        x    <- log(1 + dt$minimum_fatalities)
         bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
         # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white',
-             xlab = 'Waiting time to next eruption (in mins)',
-             main = 'Histogram of waiting times')
+        hist(x, 
+             breaks = bins, 
+             col = 'darkgray', border = 'white',
+             xlab = 'Log Deaths in War',
+             main = 'Histogram of War Deaths')
     })
 }
 
-# Run the application 
+
+# Run the application -----------------------------------------------------
+
 shinyApp(ui = ui, server = server)
