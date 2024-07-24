@@ -5,7 +5,7 @@ account: milesdwilliams15
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 12357263
-bundleId: 8899240
+bundleId: 8902614
 url: https://milesdwilliams15.shinyapps.io/shiny-data-explorer-template/
 version: 1
 asMultiple: FALSE

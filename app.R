@@ -17,7 +17,7 @@ library(ggthemes)
 theme_set(theme_fivethirtyeight())
 
 
-# Define user interface ---------------------------------------------------
+# Read in data and prep for application -----------------------------------
 
 ## read in the data
 dt <- read.csv(
@@ -27,27 +27,30 @@ dt <- read.csv(
   )
 )
 
-## variable names
+## get raw variable names
   # the raw names
 vars <- names(dt)
 
-  # cleaned up names
+  # clean up the raw variable names
 clean_names <- vars |>
   str_replace_all("_", " ") |>
   str_to_title()
 
-  # vars indexed by clean_names
+  # index the raw names by cleaned names
 names(vars) <- clean_names
 
-  # valid numerical values for x-axis
+  # keep only valid numerical values for x-axis
 xvars <- vars[
   -c(1, 6)
 ]
 
-  # valid numerical values for y-axis
+  # keep only valid numerical values for y-axis (excluding start year)
 yvars <- vars[
   -c(1, 2, 6)
 ]
+
+
+# Define user interface ---------------------------------------------------
 
 ui <- pageWithSidebar(
   headerPanel('Correlates of War Size Data Explorer'),
@@ -86,7 +89,16 @@ ui <- pageWithSidebar(
     )
   ),
   mainPanel(
-    plotOutput('plot1')
+    tabsetPanel(
+      tabPanel(
+        title = "Data Visualization",
+        plotOutput('plot1')
+      ),
+      tabPanel(
+        title = "Metadata",
+        tableOutput('dataset')
+      )
+    )
   )
 )
 
@@ -97,21 +109,26 @@ server <- function(input, output) {
   # Combine the selected variables into a new data frame
   selectedData <- reactive({
     
+    # convert var names back to original format
     vars_to_keep <- c(input$xcol, input$ycol) |>
       str_to_lower() |>
       str_replace_all(" ", "_")
     
+    # keep only the selected variables + hostility_level
     sdt <- dt[, c(vars_to_keep, "hostility_level")] |>
       filter(hostility_level %in% input$hostlev)
     
+    # standardize the variable names
     names(sdt) <- c("xvar", "yvar", "hostlev")
     
+    # return the updated dataset
     sdt
   })
   
+  # Create the data visualization
   output$plot1 <- renderPlot({
     
-    ## make the base plot
+    # make the base plot
     ggplot(selectedData()) +
       aes(
         x = xvar,
@@ -125,7 +142,7 @@ server <- function(input, output) {
         se = F
       ) -> base_plot
     
-    ## facet by hostility level?
+    # facet by hostility level?
     if(length(input$hostlev) == 2 & input$facethostlev == "Yes") {
       base_plot +
         facet_wrap(
@@ -135,19 +152,19 @@ server <- function(input, output) {
         ) -> base_plot
     }
     
-    ## apply log-10 to x-axis?
+    # apply log-10 to x-axis?
     if(input$logx == "Yes") {
       base_plot +
         scale_x_log10() -> base_plot
     }
     
-    ## apply log-10 to y-axis?
+    # apply log-10 to y-axis?
     if(input$logy == "Yes") {
       base_plot +
         scale_y_log10() -> base_plot
     }
     
-    ## return the plot
+    # return the plot with some final finishes
     base_plot +
       labs(
         title = paste0(
@@ -163,6 +180,23 @@ server <- function(input, output) {
           size = 12
         )
       )
+  })
+  
+  # Create a metadata table
+  output$dataset <- renderTable({
+    tribble(
+      ~ Variable, ~ Definition,
+      "Year Started", "The calendar year a conflict began",
+      "Years Duration", "The number of calendar years durring which a conflict lasted",
+      "Minimum Fatalities", "The minimum estimate of battle-related fatalities",
+      "Maximum Fatalities", "The maximum estimate of battle-related fatalities",
+      "Hostility Level", "Whether a conflict represented only use of force or an all-out war",
+      "Total Belligerents", "Number of countries involved by conflict end",
+      "Belligerent Population", "Combined population of countries involved at conflict start",
+      "Belligerent Military Spending", "Combined military spending of countries involved at conflict start",
+      "Belligerent Troops", "Combined military personnel of countries involved at conflict start",
+      "Mean Belligerent Democracy", "Average Polity 2 score of countries involved at conflict start"
+    )
   })
 }
 
