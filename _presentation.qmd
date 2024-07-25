@@ -1,0 +1,123 @@
+---
+title: "Using Shiny in the Classroom"
+author: "Miles D. Williams"
+format: 
+  revealjs:
+    theme: blood
+---
+
+## Using Shiny in the Classroom
+
+. . .
+
+First of all, why even??
+
+. . .
+
+Because you want your students to explore some data!
+
+. . .
+
+But why *Shiny*?
+
+. . .
+
+Because you want to maximize accessibility!
+
+. . .
+
+But *how* can I do this? I don't have a lot of time!
+
+. . .
+
+I've made Shiny dashboards for students before, and I want to gift you with a set of resources to get you started.
+
+## Facilitating student learning
+
+![](images/clipboard-2834861953.png)
+
+## Facilitating student learning
+
+Not all of my students have a background in statistical programming (`experience != TRUE`)
+
+. . .
+
+I could have gotten my students trained up, but this would have:
+
+. . .
+
+-   eaten up precious class time ⌛
+
+. . .
+
+-   led to unnecessary discouragement ☹
+
+. . .
+
+-   frustrated me 😣
+
+## Shiny as the solution
+
+![](images/clipboard-3012101217.png)
+
+## Why Shiny?
+
+. . .
+
+There are tons of pre-existing dashboards out there already!
+
+. . .
+
+But is there a dashboard that already does exactly what you want it to do?
+
+. . .
+
+Does it have exactly the data you want your students to explore?
+
+. . .
+
+No?
+
+. . .
+
+Then Shiny can give you everything that you're looking for! 💪
+
+## What I've done
+
+![](images/clipboard-17884158.png)
+
+Link: <https://github.com/milesdwilliams15/shiny-data-explorer-template>
+
+
+## What we'll do
+
+. . .
+
+&#10004; I'll have you download the code I used to create my 
+**Shiny Data Explorer Template** 
+
+. . .
+
+&#10004; I'll walk you through the code so you can understand what it's doing
+
+. . .
+
+&#10004; I'll have us wrap up with an exercise where you update my code using a new dataset of your choice
+
+## Before we get to it...
+
+. . .
+
+&#128552; You might be questioning whether you're "techy" enough to make this work.
+
+. . .
+
+&#128721; Don't! 
+
+. . .
+
+The process can be a little confusing at first
+
+. . .
+
+But you can do it! 
