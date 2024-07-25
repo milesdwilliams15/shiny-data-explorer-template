@@ -22,7 +22,6 @@ theme_set(theme_fivethirtyeight())
 ## read in the data
 dt <- read.csv(
   here(
-    "_data",
     "dashboard_data.csv"
   )
 )

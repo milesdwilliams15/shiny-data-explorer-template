@@ -17,7 +17,7 @@ library(here)
 dt <- read_rds(
   here(
     "_data",
-    "cleaned-mic-dataset.rds"
+    "raw-mic-dataset.rds"
   )
 )
 
@@ -30,7 +30,7 @@ dt |>
   transmute(
     conflict_name = micname,
     year_started = styear,
-    years_duration = endyear - styear,
+    years_duration = 1 + endyear - styear,
     minimum_fatalities = fatalmin,
     maximum_fatalities = fatalmax,
     hostility_level = hostlev,
@@ -47,7 +47,6 @@ dt |>
 write_csv(
   sm_dt,
   here(
-    "_data",
     "dashboard_data.csv"
   )
 )
