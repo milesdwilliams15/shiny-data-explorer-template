@@ -5,9 +5,9 @@ account: milesdwilliams15
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 12357263
-bundleId: 8902614
+bundleId: 8908376
 url: https://milesdwilliams15.shinyapps.io/shiny-data-explorer-template/
 version: 1
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: _data/_clean_data.R|_data/cleaned-mic-dataset.rds|README.md
+ignoredFiles: _data/_clean_data.R|_data/raw-mic-dataset.rds|_presentation.html|_presentation.qmd|_publish.yml|images/clipboard-17884158.png|images/clipboard-2834861953.png|images/clipboard-3012101217.png|README.md|_presentation_files

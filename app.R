@@ -12,7 +12,6 @@
 
 library(shiny)
 library(tidyverse)
-library(here)
 library(ggthemes)
 theme_set(theme_fivethirtyeight())
 
@@ -21,9 +20,7 @@ theme_set(theme_fivethirtyeight())
 
 ## read in the data
 dt <- read.csv(
-  here(
     "dashboard_data.csv"
-  )
 )
 
 ## get raw variable names
